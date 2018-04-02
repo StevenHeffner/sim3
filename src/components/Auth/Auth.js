@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {getUserInfo} from '../../ducks/reducer'
 // import { Redirect } from 'react-router'
 
 class Auth extends Component {
@@ -13,6 +15,7 @@ class Auth extends Component {
     };
     this.addUser = this.addUser.bind(this)
     this.getUser = this.getUser.bind(this)
+  
     
   }
 
@@ -27,14 +30,26 @@ class Auth extends Component {
       password: e.target.value
     });
   }
-  addUser(){
+  addUser(res){
     axios.post('/api/auth/register', this.state)
-    .then(this.props.history.push("/dashboard"))
+    .then(this.props.history.push("/dashboard")
+   
+  )
   }
-  getUser(){
+  getUser(res){
+    // let bla = 1+1
     axios.post('/api/auth/login', this.state )
     .then(this.props.history.push("/dashboard"))
+    .then((res) => {
+      this.props.getUserInfo(res.data[0].id, res.data[0].username, res.data[0].profile_pic)
+    })
   }
+  
+    // .then(() => {
+    //   return bla
+    // })
+    // .then(console.log(bla))
+
   render() {
     return (
       <div>
@@ -50,4 +65,4 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+export default connect(null, {getUserInfo})(Auth);

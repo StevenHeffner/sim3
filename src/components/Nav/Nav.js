@@ -8,7 +8,7 @@ function Nav (props) {
     <div>
 
    {props.username}
-   {props.profile_pic}
+   <img src = {props.profile_pic} />
    <Link to='/dashboard'><button>Home</button></Link>
    <Link to='/post/:postid'> <button>New Post</button></Link>
    <Link to='/'><button>Logout</button></Link>
